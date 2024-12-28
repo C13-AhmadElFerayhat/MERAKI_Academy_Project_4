@@ -59,6 +59,8 @@ const getArticlesByAuthor = (req, res) => {
 
 const getArticleById = (req, res) => {
   let id = req.params.id;
+  console.log(id);
+  
   dreamModel
     .findById(id)
     .populate("author", "firstName -_id")

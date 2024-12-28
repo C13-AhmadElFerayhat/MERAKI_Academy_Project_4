@@ -6,6 +6,10 @@ import SignUP from './components/SignUP/SignUP';
 import Explore from './components/Explore/Explore';
 import Login from './components/Login/Login';
 import SignOut from './components/SignOut/SignOut';
+import DreamDetails from './components/DreamDetails/DreamDetails';
+import Create from './components/DreamDetails/create/Create';
+
+
 
 
 
@@ -26,7 +30,7 @@ function App() {
         <div className='logo'>
         <img src='src/assets/Untitled-7.png' onClick={()=>navigate("/")}></img>
         <p onClick={()=>navigate("/Explore")} >Explore</p>
-        {isLoggedIn && (<p>Create</p>)}
+        {isLoggedIn && (<p onClick={()=>navigate("/Create")}>Create</p>)}
         </div>
         {toggleSearch && <input type='text' placeholder='Search..'></input>}
         <div className='log'>
@@ -51,6 +55,8 @@ function App() {
         <Route path='' element={<Home/>}></Route>
         <Route path='/SignUP' element={<SignUP/>}></Route>
         <Route path='/LogOut' element={<SignOut/>}></Route>
+        <Route path='/dream/:id' element={<DreamDetails/>}></Route>
+        <Route path='/Create' element={<Create/>}></Route>
       </Routes>
       <div>
       <p>!footer!</p>

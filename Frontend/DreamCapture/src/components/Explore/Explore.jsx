@@ -3,24 +3,17 @@ import React , { useContext, useEffect }from 'react'
 import { useState } from 'react';
 import axios from "axios";
 import { UserContext }  from '../../App';
+import {useNavigate} from "react-router-dom";
 
 
 function Explore() {
 
     const [updateID, setUpdateID] = useState("")
-    const [userId, setUserId] = useState("")
-    const [toggleUpdate, setToggleUpdate] = useState(false)
     const [newlogin, setNewlogin] = useState({})
     const [newComment, setnewComment] = useState({})
-    const [et, setet] = useState("")
     const {settoggleSearch} = useContext(UserContext);
-
-    // const {token} = useContext(UserContext);
-//     const config = {
-//       headers: { Authorization: `Bearer ${token}` }
-//   };
-  const [articles, setArticles] = useState([]);
-
+    const [articles, setArticles] = useState([]);
+    const navigate = useNavigate()
 
     const fetch = () => {
             
@@ -88,10 +81,9 @@ const AddComment = (x) => {
             <div>
               {e.visibility === "Public" && (
                 <>
-                <img src={e.img}/>
-                <p>{e.title}</p>              
-                <p>Tags: {e.tags.map((e2,i2)=> 
-                  {return e2 + " "})}</p>
+                <img onClick={()=>navigate(`/dream/${e._id}`)} src={e.img}/>
+                <p onClick={()=>navigate(`/dream/${e._id}`)}>{e.title}</p>              
+                <p>Tags: {e.tags.map((e2,i2)=> e2 + " ")}</p>
                   </>
                   )
                   }
