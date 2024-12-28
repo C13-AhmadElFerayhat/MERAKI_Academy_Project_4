@@ -1,0 +1,82 @@
+[
+  {
+    "title": "Flying Over the City",
+    "description": "I was soaring high above a city with bright lights and tall buildings. It felt exhilarating, but I was also nervous about falling.",
+    "tags": ["lucid", "adventure"],
+    "mood": "Happy",
+    "visibility": "Public",
+    "isLucid": true
+  },
+  {
+    "title": "The Endless Hallway",
+    "description": "I was trapped in a hallway that stretched infinitely. Each door I opened led to another hallway.",
+    "tags": ["mystery", "confusion"],
+    "mood": "Confused",
+    "visibility": "Private",
+    "isLucid": false
+  },
+  {
+    "title": "Chased by Shadows",
+    "description": "Dark figures were chasing me through a dense forest. No matter how fast I ran, they were always just behind me.",
+    "tags": ["nightmare", "fear"],
+    "mood": "Scared",
+    "visibility": "Public",
+    "isLucid": false
+  },
+  {
+    "title": "Reuniting with an Old Friend",
+    "description": "I met a childhood friend I hadn’t seen in years. We laughed and reminisced about old times.",
+    "tags": ["nostalgia", "happy"],
+    "mood": "Happy",
+    "visibility": "Private",
+    "isLucid": false
+  },
+  {
+    "title": "Underwater Kingdom",
+    "description": "I explored an underwater palace made of coral and glowing lights. Mermaids guided me through it.",
+    "tags": ["fantasy", "adventure"],
+    "mood": "Awe",
+    "visibility": "Shared",
+    "isLucid": true
+  },
+  {
+    "title": "Lost in a Blizzard",
+    "description": "I was wandering through a snowy wasteland, unable to find my way. The cold was overwhelming.",
+    "tags": ["loneliness", "survival"],
+    "mood": "Neutral",
+    "visibility": "Private",
+    "isLucid": false
+  },
+  {
+    "title": "Speaking to Animals",
+    "description": "I was in a forest where animals could talk. A wise owl gave me advice about my life.",
+    "tags": ["magical", "insightful"],
+    "mood": "Happy",
+    "visibility": "Shared",
+    "isLucid": true
+  },
+  {
+    "title": "The Haunted House",
+    "description": "I explored a decrepit mansion filled with ghosts and eerie noises. Despite the fear, I felt compelled to uncover its secrets.",
+    "tags": ["horror", "curiosity"],
+    "mood": "Scared",
+    "visibility": "Public",
+    "isLucid": false
+  },
+  {
+    "title": "Winning the Marathon",
+    "description": "I participated in a marathon and came first. The crowd's cheering was incredibly motivating.",
+    "tags": ["achievement", "joy"],
+    "mood": "Happy",
+    "visibility": "Private",
+    "isLucid": false
+  },
+  {
+    "title": "Time Travel to the Future",
+    "description": "I visited a futuristic city with flying cars and robots. I spoke to my future self, who gave me advice about my current struggles.",
+    "tags": ["science fiction", "insightful"],
+    "mood": "Awe",
+    "visibility": "Shared",
+    "isLucid": true
+  }
+]

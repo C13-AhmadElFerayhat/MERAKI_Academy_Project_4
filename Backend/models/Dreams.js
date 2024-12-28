@@ -8,7 +8,8 @@ const Dreams = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   tages: {type: String},
   mood: String,
-  visibility: {Type: String}
+  visibility: {Type: String},
+  img: String
 });
 
 module.exports = mongoose.model("Dreams", Dreams);

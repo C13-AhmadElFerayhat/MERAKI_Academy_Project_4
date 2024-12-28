@@ -1,9 +1,8 @@
-const articlesModel = require("../models/Dreams");
+const dreamModel = require("../models/Dreams");
 
 
 const getAllArticles = (req, res) => {
-  const userId = req.token.userId;
-  articlesModel
+  dreamModel
     .find()
     .populate("comments")
     .exec()
@@ -11,14 +10,13 @@ const getAllArticles = (req, res) => {
       if (articles.length) {
         res.status(200).json({
           success: true,
-          message: `All the articles`,
-          userId: userId,
+          message: `All the Dreams`,
           articles: articles,
         });
       } else {
         res.status(200).json({
           success: false,
-          message: `No Articles Yet`,
+          message: `No Dreams Yet`,
         });
       }
     })
@@ -35,7 +33,7 @@ const getAllArticles = (req, res) => {
 const getArticlesByAuthor = (req, res) => {
   let authorId = req.query.author;
 
-  articlesModel
+  dreamModel
     .find({ author: authorId })
     .then((articles) => {
       if (!articles.length) {
@@ -61,7 +59,7 @@ const getArticlesByAuthor = (req, res) => {
 
 const getArticleById = (req, res) => {
   let id = req.params.id;
-  articlesModel
+  dreamModel
     .findById(id)
     .populate("author", "firstName -_id")
     .exec()
@@ -91,7 +89,7 @@ const getArticleById = (req, res) => {
 const createNewArticle = (req, res) => {
   const { title, description } = req.body;
   const author = req.token.userId;
-  const newArticle = new articlesModel({
+  const newArticle = new dreamModel({
     title,
     description,
     author,
@@ -122,7 +120,7 @@ const updateArticleById = (req, res) => {
   Object.keys(filter).forEach((key) => {
     filter[key] == "" && delete filter[key];
   });
-  articlesModel
+  dreamModel
     .findByIdAndUpdate({ _id: id }, req.body, { new: true })
     .then((newArticle) => {
       if (!newArticle) {
@@ -149,7 +147,7 @@ const updateArticleById = (req, res) => {
 
 const deleteArticleById = (req, res) => {
   const id = req.params.id;
-  articlesModel
+  dreamModel
     .findByIdAndDelete(id)
     .then((result) => {
       if (!result) {
@@ -175,7 +173,7 @@ const deleteArticleById = (req, res) => {
 
 const deleteArticlesByAuthor = (req, res) => {
   const author = req.params.id;
-  articlesModel
+  dreamModel
     .deleteMany({ author })
     .then((result) => {
       if (!result.deletedCount) {

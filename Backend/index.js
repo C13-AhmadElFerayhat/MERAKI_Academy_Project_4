@@ -5,7 +5,7 @@ require("./models/db");
 
 const app = express();
 const PORT = process.env.PORT;
-const dreamsRouter = require("./routes/dreams");
+const dreamsRouter = require("./routes/Dreams");
 const userRouter = require("./routes/user");
 const roleRouter = require("./routes/roles");
 app.use(cors());
