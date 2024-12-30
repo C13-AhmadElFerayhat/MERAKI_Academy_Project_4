@@ -6,10 +6,11 @@ const Dreams = new mongoose.Schema({
   createdAt:{ type: Date, default: Date.now },
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-  tages: {type: String},
+  tags: {type: Array},
   mood: String,
-  visibility: {Type: String},
-  img: String
+  visibility: {type: String, enum: ['private', 'public'], default: 'public'},
+  img: String,
+  isLucid: {type:Boolean, default: true}
 });
 
 module.exports = mongoose.model("Dreams", Dreams);

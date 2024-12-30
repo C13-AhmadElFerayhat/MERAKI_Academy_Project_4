@@ -79,11 +79,11 @@ const AddComment = (x) => {
             return  (
             
             <div>
-              {e.visibility === "Public" && (
+              {e.visibility.toUpperCase() === "Public".toUpperCase() && (
                 <>
                 <img onClick={()=>navigate(`/dream/${e._id}`)} src={e.img}/>
                 <p onClick={()=>navigate(`/dream/${e._id}`)}>{e.title}</p>              
-                <p>Tags: {e.tags.map((e2,i2)=> e2 + " ")}</p>
+                <p>Tags: {e.tags?.map((e2,i2)=> e2 + " ")}</p>
                   </>
                   )
                   }

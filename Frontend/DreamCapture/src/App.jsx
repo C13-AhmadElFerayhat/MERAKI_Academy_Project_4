@@ -7,7 +7,9 @@ import Explore from './components/Explore/Explore';
 import Login from './components/Login/Login';
 import SignOut from './components/SignOut/SignOut';
 import DreamDetails from './components/DreamDetails/DreamDetails';
-import Create from './components/DreamDetails/create/Create';
+import Create from './components/create/Create';
+import Profile from './components/Profile/Profile';
+Profile
 
 
 
@@ -57,6 +59,7 @@ function App() {
         <Route path='/LogOut' element={<SignOut/>}></Route>
         <Route path='/dream/:id' element={<DreamDetails/>}></Route>
         <Route path='/Create' element={<Create/>}></Route>
+        <Route path='/Profile' element={<Profile/>}></Route>
       </Routes>
       <div>
       <p>!footer!</p>

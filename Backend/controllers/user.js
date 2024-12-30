@@ -64,8 +64,8 @@ const login = (req, res) => {
         const payload = {
           userId: result._id,
           author: result.firstName,
-          role: result.role,
-          country: result.country,
+          lastName: result.lastName,
+          role: result.role
         };
 
         const options = {
@@ -90,7 +90,38 @@ const login = (req, res) => {
     });
 };
 
+const getProfile = (req, res) => {
+  let id = req.token.userId;
+  usersModel
+    .findById(id)
+    .exec()
+    .then((User) => {
+      if (!User) {
+        return res.status(404).json({
+          success: false,
+          message: `The User with id => ${id} not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `The User ${id} `,
+        User: User,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+
 module.exports = {
   register,
   login,
+  getProfile
 };

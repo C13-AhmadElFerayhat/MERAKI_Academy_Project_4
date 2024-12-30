@@ -31,7 +31,7 @@ function DreamDetails() {
 
   return (
    <> 
-   {Dream&& <div>
+   {Dream && <div>
 
         <img src={Dream.img}/>    
         <h1>{Dream.title}</h1>   
@@ -39,7 +39,7 @@ function DreamDetails() {
         <p>mood: {Dream.mood}</p>
         <p>Is Lucid? {Dream.isLucid ? "yes" : "no"}</p>
         
-        <p>Tags: {Dream?.tags.map((e2,i2)=> e2 + " ")}</p>
+        <p>Tags: {Dream?.tags?.map((e2,i2)=> e2 + " ")}</p>
         <h4>{Dream.description}</h4>
 
             

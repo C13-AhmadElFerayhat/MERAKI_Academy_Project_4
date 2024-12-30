@@ -89,12 +89,17 @@ const getArticleById = (req, res) => {
 
 
 const createNewArticle = (req, res) => {
-  const { title, description } = req.body;
+  const { title, description,tags,mood,isLucid,img,visibility } = req.body;
   const author = req.token.userId;
   const newArticle = new dreamModel({
     title,
     description,
+    tags,
     author,
+    mood,
+    visibility,
+    isLucid,
+    img
   });
 
   newArticle
