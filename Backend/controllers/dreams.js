@@ -4,13 +4,14 @@ const dreamModel = require("../models/Dreams");
 const getAllArticles = (req, res) => {
   dreamModel
     .find()
-    .populate("comments")
+    .populate("author", "comments")
     .exec()
     .then((articles) => {
+      console.log(articles);
       if (articles.length) {
         res.status(200).json({
           success: true,
-          message: `All the Dreams`,
+          message: `All the Dreams`,         
           articles: articles,
         });
       } else {

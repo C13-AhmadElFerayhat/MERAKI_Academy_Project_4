@@ -1,3 +1,12 @@
-img{
-  height: 50px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .hero{
+  background-image: url(assets/blue_whale_nebula_by_shootingstarlogbook_dedf6bp-pre.jpg) ;
+} */
+
+
