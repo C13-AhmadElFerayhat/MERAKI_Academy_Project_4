@@ -64,7 +64,7 @@ const getArticleById = (req, res) => {
   
   dreamModel
     .findById(id)
-    .populate("author", "firstName -_id")
+    .populate("author")
     .exec()
     .then((article) => {
       if (!article) {

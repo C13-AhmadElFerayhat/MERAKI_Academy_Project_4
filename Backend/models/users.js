@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   createdAt:{ type: Date, default: Date.now },
   role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
-  isActive: {type:Boolean, default: true}
+  isActive: {type:Boolean, default: true},
+  img: String
 });
 
 userSchema.pre("save", async function () {
