@@ -9,6 +9,7 @@ function Login() {
     const [newlogin, setNewlogin] = useState({})
     const [Res, setRes] = useState("")
     const navigate = useNavigate()
+    
     const {token, setToken,setIsLoggedIn} = useContext(UserContext);
 
 
@@ -16,7 +17,9 @@ function Login() {
                        
         axios.post('http://localhost:5000/users/login', newlogin)
           .then(function (rese) {
-            setRes(rese.data.message);
+            setRes(rese.data.message)
+            
+            
             setToken(rese.data.token)
             setIsLoggedIn(true)
             navigate("/")

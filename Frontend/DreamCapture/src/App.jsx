@@ -13,6 +13,7 @@ import Profile from "./components/Profile/Profile";
 export const UserContext = createContext();
 
 function App() {
+  const [user, setUser] = useState({});
   const [token, setToken] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function App() {
 
 
   return (
-    <UserContext.Provider value={{ token, setToken, setIsLoggedIn ,settoggleSearch}}>
+    <UserContext.Provider value={{ token, setToken, setIsLoggedIn ,settoggleSearch, isLoggedIn,user, setUser}}>
       <div className={`${isDarkMode ? "dark" : ""} font-varela`}>
         {/* Navbar */}
         <header className="navbar bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text sticky top-0 flex justify-between items-center p-4 shadow-md border-t border-gray-200 dark:border-white-700">

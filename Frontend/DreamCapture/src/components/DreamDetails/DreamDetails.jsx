@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 function DreamDetails() {
   const [Dream, setDream] = useState(null);
-  const [img, setimg] = useState("")
 
   const { id } = useParams();
 

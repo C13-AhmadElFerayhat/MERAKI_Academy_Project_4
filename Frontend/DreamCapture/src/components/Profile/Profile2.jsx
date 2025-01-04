@@ -9,7 +9,7 @@ function Profile() {
   const [activeTab, setActiveTab] = useState("Your dreams");
   const { token } = useContext(UserContext);
   const [articles, setArticles] = useState([]);
-  const [Refresh, setRefresh] = useState(true)
+const [auther, setauther] = useState({})
 const navigate = useNavigate();
 
   const config = {
@@ -28,16 +28,16 @@ const navigate = useNavigate();
         console.error(error);
       })
 
+      setauther({auther: user._id})
 
     
-  }, [Refresh]);
-
+  }, []);
 
   const addFav = (idOfUser, idOfPost) => {
     let y = { idOfUser, idOfPost };
     console.log(y);
   axios
-        .put("http://localhost:5000/users/fav" ,y)
+        .put("http://localhost:5000/dreams/fav" ,y)
         .then(function (res) {
           console.log("done");
           
@@ -48,21 +48,9 @@ const navigate = useNavigate();
   
     }
 
-    const removeFav = (idOfUser, idOfPost) => {
-      let y = { idOfUser, idOfPost };
-    axios
-          .put("http://localhost:5000/users/removefav" ,y)
-          .then(function (res) {
-            console.log("done");
-            
-          })
-          .catch(function (err) {
-            console.log(err);
-          })
-    
-      }
 
   const fecthDreams = (x) => {
+  let y = {id: x}
 axios
       .get("http://localhost:5000/dreams/search_1" ,{
         params: { id: x }, 
@@ -144,7 +132,7 @@ axios
               <div className="container mx-auto px-4">
               <h1 className="text-4xl font-bold text-center mb-8">Your Dreams</h1>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {articles && articles.map((e, i) => {
+                {articles && articles.filter(e => e.visibility.toUpperCase() === "Public".toUpperCase()).map((e, i) => {
                   
                     return (
                       <div
@@ -152,7 +140,7 @@ axios
                         className="max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
                       >
                         <img
-                          className="w-full h-48 object-cover cursor-pointer"
+                          className="w-full h-48 object-cover"
                           onClick={()=>navigate(`/dream/${e._id}`)}
                           src={e.img}
                           alt={e.title}
@@ -189,17 +177,14 @@ axios
                             ))}
                           </div>
                           <div className="grid justify-center">
-                          {user.Fav.map(e => e._id).includes(e._id) ? (
-                          <RiHeart3Fill onClick={()=>{
-                            removeFav(user._id,e._id)
-                            setRefresh(!Refresh)}}
-                          className="w-7 h-7 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary"/>
+                          {user.fav?.includes(e._id) ? (
+                          <RiHeart3Fill className="w-7 h-7"/>
                           ):(
+                            
                           <RiHeartAdd2Line onClick={()=>{
-                            console.log(user.Fav._id);
+                            
                             addFav(user._id,e._id)
-                            setRefresh(!Refresh)
-                          }} className="w-7 h-7 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary"/>
+                          }} className="w-7 h-7"/>
                           )}
                           </div>
                         </div>
@@ -210,72 +195,18 @@ axios
             </div>
             )}
             {activeTab === "Favourite" && (
-              <div className="container mx-auto px-4">
-              <h1 className="text-4xl font-bold text-center mb-8">Your Favourite</h1>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {user.Fav && user.Fav.map((e, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
-                      >
-                        <img
-                          className="w-full h-48 object-cover cursor-pointer"
-                          onClick={()=>navigate(`/dream/${e._id}`)}
-                          src={e.img}
-                          alt={e.title}
-                        />
-                        <div className="px-6 py-4">
-                          <h2 
-                          onClick={()=>navigate(`/dream/${e._id}`)}
-                          className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
-                          <div className="flex items-center mb-4">
-                            <img
-                              className="w-10 h-10 rounded-full mr-4 object-contain"
-                              src={e.author.img}
-                              alt="Avatar"
-                            />
-                            <div className="text-sm">
-                              <p className="text-gray-900 dark:text-gray-100 leading-none">
-                              {e.author.firstName} {e.author.lastName}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="text-sm">
-                          <p className="text-gray-900 dark:text-gray-100 leading-none">
-                            <strong>Date:</strong> {new Date(e.createdAt).toLocaleDateString()}
-                          </p>
-                            </div>
-                          <div className="px-6 pt-4 pb-2">
-                            {e.tags?.map((e, i) => (
-                              <span
-                                key={i}
-                                className="inline-block bg-gray-200 dark:bg-gray-600 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-300 mr-2 mb-2"
-                              >
-                                #{e}
-                              </span>
-                            ))}
-                          </div>
-                          <div className="grid justify-center">
-                          {user.Fav.map(e => e._id).includes(e._id) ? (
-                          <RiHeart3Fill onClick={()=>{
-                            removeFav(user._id,e._id)
-                            setRefresh(!Refresh)}}
-                          className="w-7 h-7 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary"/>
-                          ):(
-                          <RiHeartAdd2Line onClick={()=>{
-                            console.log(user.Fav._id);
-                            addFav(user._id,e._id)
-                            setRefresh(!Refresh)
-                          }} className="w-7 h-7 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary"/>
-                          )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+              <div
+                className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+                role="tabpanel"
+              >
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  This is some placeholder content for the{" "}
+                  <strong className="font-medium text-gray-800 dark:text-white">
+                    Favourite
+                  </strong>{" "}
+                  tab.
+                </p>
               </div>
-            </div>
             )}
           </div>
         </div>
