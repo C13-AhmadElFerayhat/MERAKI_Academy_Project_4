@@ -4,7 +4,7 @@ const dreamModel = require("../models/Dreams");
 const getAllArticles = (req, res) => {
   dreamModel
     .find()
-    .populate("author", "comments")
+    .populate("author")
     .exec()
     .then((articles) => {
       console.log(articles);
@@ -32,8 +32,8 @@ const getAllArticles = (req, res) => {
 
 
 const getArticlesByAuthor = (req, res) => {
-  let authorId = req.query.author;
-
+  let authorId = req.query.id;
+  
   dreamModel
     .find({ author: authorId })
     .then((articles) => {
@@ -60,8 +60,6 @@ const getArticlesByAuthor = (req, res) => {
 
 const getArticleById = (req, res) => {
   let id = req.params.id;
-  console.log(id);
-  
   dreamModel
     .findById(id)
     .populate("author")

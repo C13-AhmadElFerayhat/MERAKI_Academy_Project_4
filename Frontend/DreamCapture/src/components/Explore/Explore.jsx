@@ -36,7 +36,6 @@ function Explore() {
           {articles && articles.filter(e => e.visibility.toUpperCase() === "Public".toUpperCase()).map((e, i) => {
             
               return (
-                
                 <div
                   key={i}
                   className="max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
@@ -53,13 +52,13 @@ function Explore() {
                     className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
                     <div className="flex items-center mb-4">
                       <img
-                        className="w-10 h-10 rounded-full mr-4"
-                        src="/img/jonathan.jpg"
-                        alt="Avatar of Ahmad Elferayhat"
+                        className="w-10 h-10 rounded-full mr-4 object-contain"
+                        src={e.author.img}
+                        alt="Avatar"
                       />
                       <div className="text-sm">
                         <p className="text-gray-900 dark:text-gray-100 leading-none">
-                          Ahmad Elferayhat
+                        {e.author.firstName} {e.author.lastName}
                         </p>
                       </div>
                     </div>

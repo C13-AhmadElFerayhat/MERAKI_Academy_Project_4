@@ -58,13 +58,13 @@ function App() {
               <>
                 <button
                   onClick={() => navigate("/Profile")}
-                  className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text px-4 py-2 rounded"
+                  className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary px-4 py-2 rounded"
                 >
                   Profile
                 </button>
                 <button
                   onClick={() => navigate("/LogOut")}
-                  className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text px-4 py-2 rounded"
+                  className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary px-4 py-2 rounded"
                 >
                   Log Out
                 </button>
