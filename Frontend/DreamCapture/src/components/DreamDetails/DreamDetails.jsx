@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext }  from '../../App';
 
 function DreamDetails() {
@@ -8,9 +8,17 @@ function DreamDetails() {
   const [newComment, setnewComment] = useState({})
   const [Refresh, setRefresh] = useState(true)
   const { id } = useParams();
-  const {user, token} = useContext(UserContext);
+  const {user, token, isLoggedIn} = useContext(UserContext);
   const [Res, setRes] = useState("")
-
+  const [toggleDelete, settoggleDelete] = useState(false)
+  const [toggleUpdate, settoggleUpdate] = useState(false)
+  const [newDream, setnewDream] = useState({
+    isLucid: true,
+    visibility: "public",
+  });
+  const [newTags, setnewTags] = useState([]);
+  const navigate = useNavigate()
+  
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -18,9 +26,7 @@ function DreamDetails() {
 
 
   const createComment = (com, dId) => {
-    console.log(com);
-    let addedCom = newComment;
-    console.log(addedCom);
+    
         
     axios
       .post(`http://localhost:5000/dreams/${dId}/comments`, com, config)
@@ -39,6 +45,32 @@ function DreamDetails() {
       })
       .catch((err) => console.error(err));
   };
+
+  const deleteById = (x) => {
+
+    console.log(x);
+    
+            
+    axios.delete(`http://localhost:5000/dreams/${x}`)
+      .then(function (rese) {
+        fetch()     
+      })
+      .catch(function (err) {
+       console.log(err);
+      });
+}
+const updateById = () => {
+          
+  axios.put(`http://localhost:5000/articles/${updateID}`,newlogin,config)
+    .then(function (rese) {
+      console.log(updateID);
+      fetch()     
+    })
+    .catch(function (err) {
+     console.log(err);
+    });
+}
+
 
   useEffect(() => {
     fetch();
@@ -92,14 +124,76 @@ function DreamDetails() {
             </div>
 
             {/* Buttons */}
-            <div className="flex space-x-4">
-              <button className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">
-                Edit
-              </button>
-              <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+
+            {user._id == Dream.author && isLoggedIn && (
+              
+              <div className="flex space-x-4">
+              
+              {/* Edit sectin here */}
+
+              <button 
+              onClick={()=>{settoggleDelete(true)}}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
                 Delete
               </button>
-            </div>
+              {toggleDelete && (
+                  <div
+                  className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50"
+                  onClick={() => settoggleDelete(false)}
+                >
+                  <div
+                    className="relative p-4 w-full max-w-2xl max-h-full bg-white rounded-lg shadow dark:bg-gray-700"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Modal Header */}
+                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                      "Delete Notice"
+                      </h3>
+                      <button
+                        type="button"
+                        className="text-gray-400 bg-transparent hover:bg-red-200 hover:text-red-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-red-600 dark:hover:text-white"
+                        onClick={() => settoggleDelete(false)}
+                      >
+                        <span className="sr-only">Close modal</span>
+                        ✕
+                      </button>
+                    </div>
+            
+                    {/* Modal Body */}
+                    <div className="p-4 md:p-5 space-y-4">
+                      <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        {`Are you sure you want to delete "${Dream?.title}" dream?`}
+                      </p>
+                      <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Note: you can't redo this action.
+                      </p>
+                    </div>
+            
+                    {/* Modal Footer */}
+                    <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                      <button
+                        onClick={() => {deleteById(Dream._id)
+                          alert (`The dream "${Dream.title}" has been removed`)
+                        navigate(-1)
+                        }
+                        }
+                        className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        onClick={() => settoggleDelete(false)}
+                        className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>)}
+            
           </div>
 
           {/* Comment Section */}
@@ -123,7 +217,7 @@ function DreamDetails() {
                 <button
                   onClick={() => {    
                     createComment(newComment, Dream._id)}}
-                 className="mt-4 bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded font-semibold">
+                 className="mt-4 bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary py-2 px-4 rounded font-semibold">
                   Post Comment
                 </button>
               </div>)}

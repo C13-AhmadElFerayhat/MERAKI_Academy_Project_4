@@ -163,15 +163,12 @@ axios
                           className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
                           <div className="flex items-center mb-4">
                             <img
-                              onClick={()=>navigate(`/profile/${e.author._id}`)}
-                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
+                              className="w-10 h-10 rounded-full mr-4 object-contain"
                               src={e.author.img}
                               alt="Avatar"
                             />
                             <div className="text-sm">
-                              <p
-                              onClick={()=>navigate(`/profile/${e.author._id}`)} 
-                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
+                              <p className="text-gray-900 dark:text-gray-100 leading-none">
                               {e.author.firstName} {e.author.lastName}
                               </p>
                             </div>
@@ -222,6 +219,7 @@ axios
                         key={i}
                         className="max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
                       >
+                        {console.log(e)}
                         <img
                           className="w-full h-48 object-cover cursor-pointer"
                           onClick={()=>navigate(`/dream/${e._id}`)}
@@ -234,15 +232,12 @@ axios
                           className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
                           <div className="flex items-center mb-4">
                             <img
-                              onClick={()=>navigate(`/profile/${e.author._id}`)}
-                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
+                              className="w-10 h-10 rounded-full mr-4 object-contain"
                               src={e.author.img}
                               alt="Avatar"
                             />
                             <div className="text-sm">
-                              <p
-                              onClick={()=>navigate(`/profile/${e.author._id}`)} 
-                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
+                              <p className="text-gray-900 dark:text-gray-100 leading-none">
                               {e.author.firstName} {e.author.lastName}
                               </p>
                             </div>
