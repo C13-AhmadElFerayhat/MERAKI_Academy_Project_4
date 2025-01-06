@@ -9,11 +9,12 @@ import SignOut from "./components/SignOut/SignOut";
 import DreamDetails from "./components/DreamDetails/DreamDetails";
 import Create from "./components/create/Create";
 import Profile from "./components/Profile/Profile";
+import Profile2 from "./components/Profile/Profile2.jsx";
 
 export const UserContext = createContext();
 
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [token, setToken] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -99,6 +100,7 @@ function App() {
           <Route path="/dream/:id" element={<DreamDetails />} />
           <Route path="/Create" element={<Create />} />
           <Route path="/Profile" element={<Profile />} />
+          <Route path="/Profile/:id" element={<Profile2 />} />
         </Routes>
 
         {/* Footer */}

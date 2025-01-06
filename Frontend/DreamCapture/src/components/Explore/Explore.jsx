@@ -3,14 +3,30 @@ import { useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../App";
 import { useNavigate } from "react-router-dom";
-import { RiHeartAdd2Line } from "react-icons/ri";
+import { RiHeartAdd2Line, RiHeart3Fill } from "react-icons/ri";
 
 function Explore() {
-  const { settoggleSearch,isLoggedIn } = useContext(UserContext);
+  const { settoggleSearch,isLoggedIn,token } = useContext(UserContext);
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
+  const [Refresh, setRefresh] = useState(true)
+  const [user, setUser] = useState({});
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
   const fetch = () => {
+    if (isLoggedIn){
+      axios
+      .get(`http://localhost:5000/users`, config)
+      .then((response) => {
+        setUser(response.data.User);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+    }
     axios
       .get("http://localhost:5000/dreams")
       .then(function (res) {
@@ -21,13 +37,42 @@ function Explore() {
       });
   };
 
+  const addFav = (idOfUser, idOfPost) => {
+    let y = { idOfUser, idOfPost };
+    console.log(y);
+  axios
+        .put("http://localhost:5000/users/fav" ,y)
+        .then(function (res) {
+          console.log("done");
+          
+        })
+        .catch(function (err) {
+          console.log(err);
+        })
+  
+    }
+
+    const removeFav = (idOfUser, idOfPost) => {
+      let y = { idOfUser, idOfPost };
+    axios
+          .put("http://localhost:5000/users/removefav" ,y)
+          .then(function (res) {
+            console.log("done");
+            
+          })
+          .catch(function (err) {
+            console.log(err);
+          })
+    
+      }
+
   useEffect(() => {
     fetch();
     settoggleSearch(true);
     return () => {
       settoggleSearch(false);
     };
-  }, []);
+  }, [Refresh]);
 
   return (
     <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text py-8">
@@ -53,12 +98,15 @@ function Explore() {
                           className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
                           <div className="flex items-center mb-4">
                             <img
-                              className="w-10 h-10 rounded-full mr-4 object-contain"
+                              onClick={()=>navigate(`/profile/${e.author._id}`)}
+                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
                               src={e.author.img}
                               alt="Avatar"
                             />
                             <div className="text-sm">
-                              <p className="text-gray-900 dark:text-gray-100 leading-none">
+                              <p
+                              onClick={()=>navigate(`/profile/${e.author._id}`)} 
+                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
                               {e.author.firstName} {e.author.lastName}
                               </p>
                             </div>
@@ -78,8 +126,8 @@ function Explore() {
                               </span>
                             ))}
                           </div>
-                          <div className="grid justify-center">
-                          {isLoggedIn && (user.Fav.map(e => e._id).includes(e._id) ? (
+                          {isLoggedIn && <div className="grid justify-center">
+                          {user.Fav?.map(e => e._id).includes(e._id) ? (
                           <RiHeart3Fill onClick={()=>{
                             removeFav(user._id,e._id)
                             setRefresh(!Refresh)}}
@@ -90,8 +138,8 @@ function Explore() {
                             addFav(user._id,e._id)
                             setRefresh(!Refresh)
                           }} className="w-7 h-7 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary"/>
-                          ))}
-                          </div>
+                          )}
+                          </div>}
                         </div>
                       </div>
               );

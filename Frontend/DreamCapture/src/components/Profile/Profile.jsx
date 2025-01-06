@@ -163,12 +163,15 @@ axios
                           className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
                           <div className="flex items-center mb-4">
                             <img
-                              className="w-10 h-10 rounded-full mr-4 object-contain"
+                              onClick={()=>navigate(`/profile/${e.author._id}`)}
+                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
                               src={e.author.img}
                               alt="Avatar"
                             />
                             <div className="text-sm">
-                              <p className="text-gray-900 dark:text-gray-100 leading-none">
+                              <p
+                              onClick={()=>navigate(`/profile/${e.author._id}`)} 
+                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
                               {e.author.firstName} {e.author.lastName}
                               </p>
                             </div>
@@ -231,12 +234,15 @@ axios
                           className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
                           <div className="flex items-center mb-4">
                             <img
-                              className="w-10 h-10 rounded-full mr-4 object-contain"
+                              onClick={()=>navigate(`/profile/${e.author._id}`)}
+                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
                               src={e.author.img}
                               alt="Avatar"
                             />
                             <div className="text-sm">
-                              <p className="text-gray-900 dark:text-gray-100 leading-none">
+                              <p
+                              onClick={()=>navigate(`/profile/${e.author._id}`)} 
+                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
                               {e.author.firstName} {e.author.lastName}
                               </p>
                             </div>

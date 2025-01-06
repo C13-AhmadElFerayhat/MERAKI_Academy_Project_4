@@ -38,7 +38,7 @@ function Create() {
         setnewDream({ ...newDream, img: rese.data.url });
       })
       .catch(function (err) {
-        console.log(err.response.data);
+        console.log(err.response.data.message);
       });
   };
 
@@ -197,7 +197,7 @@ function Create() {
         {Res && (
           <p
             className={`text-center mt-4 ${
-              Res.includes("success") ? "text-teal-600" : "text-red-500"
+              Res === "Article created" ? "text-teal-600" : "text-red-500"
             }`}
           >
             {Res}

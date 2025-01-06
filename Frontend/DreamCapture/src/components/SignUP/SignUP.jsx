@@ -157,7 +157,7 @@ function SignUp() {
         {Show && (
           <p
             className={`text-center mt-4 ${
-              Res.includes("success") ? "text-teal-600" : "text-red-500"
+              Res == "Account Created Successfully" ? "text-teal-600" : "text-red-500"
             }`}
           >
             {Res}
