@@ -10,7 +10,6 @@ import DreamDetails from "./components/DreamDetails/DreamDetails";
 import Create from "./components/create/Create";
 import Profile from "./components/Profile/Profile";
 import Profile2 from "./components/Profile/Profile2.jsx";
-import { FiSearch } from "react-icons/fi";
 
 export const UserContext = createContext();
 
@@ -21,7 +20,6 @@ function App() {
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [toggleSearch, settoggleSearch] = useState(false)
-
 
   return (
     <UserContext.Provider value={{ token, setToken, setIsLoggedIn ,settoggleSearch, isLoggedIn,user, setUser}}>
@@ -51,12 +49,6 @@ function App() {
             )}
           </div>
           
-    {toggleSearch && (
-      <div class="relative">
-      <input className="block w-full p-4 pe-20 text-gray-900 border border-light-primary rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-dark-primary dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
-      <button className="text-white absolute end-2.5 bottom-2.5 bg-light-primary dark:bg-dark-primary hover:bg-drak-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-3 dark:focus:ring-blue-800"><FiSearch /></button>
-      </div>
-    )}
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}

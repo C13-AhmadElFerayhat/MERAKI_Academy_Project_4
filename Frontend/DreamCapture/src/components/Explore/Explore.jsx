@@ -4,6 +4,8 @@ import axios from "axios";
 import { UserContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { RiHeartAdd2Line, RiHeart3Fill } from "react-icons/ri";
+import { FiSearch } from "react-icons/fi";
+
 
 function Explore() {
   const { settoggleSearch,isLoggedIn,token } = useContext(UserContext);
@@ -11,6 +13,7 @@ function Explore() {
   const navigate = useNavigate();
   const [Refresh, setRefresh] = useState(true)
   const [user, setUser] = useState({});
+  const [articles2, setArticles2] = useState([]);
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -30,7 +33,9 @@ function Explore() {
     axios
       .get("http://localhost:5000/dreams")
       .then(function (res) {
-        setArticles(res.data.articles);
+        setArticles(res.data.articles);    
+        setArticles2(res.data.articles) 
+        
       })
       .catch(function (err) {
         console.log(err);
@@ -68,18 +73,25 @@ function Explore() {
 
   useEffect(() => {
     fetch();
-    settoggleSearch(true);
-    return () => {
-      settoggleSearch(false);
-    };
+    
   }, [Refresh]);
 
   return (
     <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text py-8">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-8">Explore Dreams</h1>
+        <div className="flex items-center w-full max-w-md mx-auto mt-2 pb-10 md:mt-0 ">
+    <input
+      
+      onChange={(e)=>{setArticles2(articles.filter((e2)=> e2.title.includes(e.target.value) || e2.description.toUpperCase().includes(e.target.value.toUpperCase()) || e2.title.toUpperCase().includes(e.target.value.toUpperCase())))}}
+      className="w-full p-4 pr-12 text-gray-900 border-2 border-light-primary rounded-lg bg-gray-50 focus:ring-2 focus:ring-light-primary focus:outline-none dark:bg-gray-800 dark:border-dark-primary dark:placeholder-gray-400 dark:text-white dark:focus:ring-dark-primary"
+      placeholder="Search..."
+      required
+    />
+  </div>
+  {console.log(articles, articles2)}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {articles && articles.filter(e => e.visibility.toUpperCase() === "Public".toUpperCase()).map((e, i) => {
+          {articles2 && articles2.filter(e => e.visibility.toUpperCase() === "Public".toUpperCase()).map((e, i) => {
             
               return (
                 <div
