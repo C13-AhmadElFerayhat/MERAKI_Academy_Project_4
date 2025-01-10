@@ -9,6 +9,7 @@ const {
   updateArticleById,
   deleteArticleById,
   deleteArticlesByAuthor,
+  addTag
 } = require("../controllers/dreams");
 
 const authentication = require("../middleware/authentication");
@@ -20,10 +21,12 @@ dreamsrouter.get("/", authentication, getAllArticles);
 dreamsrouter.get("/search_1", getArticlesByAuthor);
 dreamsrouter.get("/search_2/:id", getArticleById);
 dreamsrouter.post("/",authentication,authorization("Create Dreams"),createNewArticle);
+dreamsrouter.put("/addTag", addTag);
 dreamsrouter.put("/:id", updateArticleById);
 dreamsrouter.delete("/:id", deleteArticleById);
 dreamsrouter.delete("/:id/author", deleteArticlesByAuthor);
-
 dreamsrouter.post("/:id/comments",authentication,authorization("Create Comments"), createNewComment);
+
+
 
 module.exports = dreamsrouter;

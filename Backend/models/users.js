@@ -11,7 +11,10 @@ const userSchema = new mongoose.Schema({
   createdAt:{ type: Date, default: Date.now },
   role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
   isActive: {type:Boolean, default: true},
-  img: String
+  img: String,
+  Fav: [{type: mongoose.Schema.Types.ObjectId, ref: "Dreams"}],
+  Followers: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+  Following: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}]
 });
 
 userSchema.pre("save", async function () {

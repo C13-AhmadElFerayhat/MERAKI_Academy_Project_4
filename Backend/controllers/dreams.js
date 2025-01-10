@@ -36,6 +36,7 @@ const getArticlesByAuthor = (req, res) => {
   
   dreamModel
     .find({ author: authorId })
+    .populate("author")
     .then((articles) => {
       if (!articles.length) {
         return res.status(404).json({
@@ -62,8 +63,12 @@ const getArticleById = (req, res) => {
   let id = req.params.id;
   dreamModel
     .findById(id)
-    .populate("author")
-    .exec()
+    .populate({
+      path: 'comments',
+      populate: {
+          path: 'commenter' 
+      }
+}).exec()
     .then((article) => {
       if (!article) {
         return res.status(404).json({
@@ -203,6 +208,41 @@ const deleteArticlesByAuthor = (req, res) => {
     });
 };
 
+const addTag = (req, res) => {
+  const {idOfUser, idOfPost} = req.body;
+  console.log(req.body);
+  
+  dreamModel
+  .findByIdAndUpdate(
+    { _id: idOfUser},
+    { $addToSet: { tags: idOfPost }},
+    { new: true }
+  )
+  .exec()
+    .then((Fav) => {
+      if (!Fav) {
+        return res.status(404).json({
+          success: false,
+          message: `The article with id => ${id} not found`,
+        });
+      }
+      res.status(202).json({
+        success: true,
+        message: `tag updated`,
+        article: Fav,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+      console.log(err.message);
+      
+    });
+};
+
 module.exports = {
   getAllArticles,
   getArticlesByAuthor,
@@ -211,4 +251,5 @@ module.exports = {
   updateArticleById,
   deleteArticleById,
   deleteArticlesByAuthor,
+  addTag
 };

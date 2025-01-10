@@ -77,6 +77,7 @@ const login = (req, res) => {
           success: true,
           message: `Valid login credentials`,
           token: token,
+          user: result
         });
       } catch (error) {
         throw new Error(error.message);
@@ -95,6 +96,13 @@ const getProfile = (req, res) => {
   let id = req.token.userId;
   usersModel
     .findById(id)
+    .populate({
+      path: 'Fav',
+      populate: {
+          path: 'author' 
+      }})
+    .populate('Following')
+    .populate('Followers')
     .exec()
     .then((User) => {
       if (!User) {
@@ -120,9 +128,206 @@ const getProfile = (req, res) => {
     });
 };
 
+const getProfileById = (req, res) => {
+  let id = req.params.id;
+  usersModel
+    .findById(id)
+    .populate({
+      path: 'Fav',
+      populate: {
+          path: 'author' 
+      }})
+    .populate('Following')
+    .populate('Followers')
+    .exec()
+    .then((User) => {
+      if (!User) {
+        return res.status(404).json({
+          success: false,
+          message: `The User with id => ${id} not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `The User ${id} `,
+        User: User,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+const addFav = (req, res) => {
+  const {idOfUser, idOfPost} = req.body;
+  usersModel
+  .findByIdAndUpdate(
+    { _id: idOfUser},
+    { $addToSet: { Fav: idOfPost }},
+    { new: true }
+  )
+  .exec()
+    .then((Fav) => {
+      if (!Fav) {
+        return res.status(404).json({
+          success: false,
+          message: `The article with id => ${id} not found`,
+        });
+      }
+      res.status(202).json({
+        success: true,
+        message: `Fav updated`,
+        article: Fav,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+      console.log(err.message);
+      
+    });
+};
+
+const removeFav = (req, res) => {
+  const {idOfUser, idOfPost} = req.body;
+  usersModel
+  .findByIdAndUpdate(
+    { _id: idOfUser},
+    { $pull: { Fav: idOfPost }},
+    { new: true }
+  )
+    .then((Fav) => {
+      if (!Fav) {
+        return res.status(404).json({
+          success: false,
+          message: `The article with id => ${id} not found`,
+        });
+      }
+      res.status(202).json({
+        success: true,
+        message: `Fav updated`,
+        article: Fav,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+      console.log(err.message);
+      
+    });
+};
+
+const addFollowers = async (req, res) => {
+  const { idOfUser, idOfUser2 } = req.body;
+
+  try {
+    const user1Update = await usersModel.findByIdAndUpdate(
+      { _id: idOfUser },
+      { $addToSet: { Following: idOfUser2 } },
+      { new: true }
+    );
+
+    if (!user1Update) {
+      return res.status(404).json({
+        success: false,
+        message: `The user with id => ${idOfUser} not found`,
+      });
+    }
+
+    const user2Update = await usersModel.findByIdAndUpdate(
+      { _id: idOfUser2 },
+      { $addToSet: { Followers: idOfUser } },
+      { new: true }
+    );
+
+    if (!user2Update) {
+      return res.status(404).json({
+        success: false,
+        message: `The user with id => ${idOfUser2} not found`,
+      });
+    }
+
+    return res.status(202).json({
+      success: true,
+      message: `Followers updated`,
+      data: { Following: user1Update, Followers: user2Update },
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({
+      success: false,
+      message: `Server Error`,
+      error: err.message,
+    });
+  }
+};
+
+
+const removeFollow = async (req, res) => {
+  const { idOfUser, idOfUser2 } = req.body;
+
+  try {
+    const user1Update = await usersModel.findByIdAndUpdate(
+      { _id: idOfUser },
+      { $pull: { Following: idOfUser2 } },
+      { new: true }
+    );
+
+    if (!user1Update) {
+      return res.status(404).json({
+        success: false,
+        message: `The user with id => ${idOfUser} not found`,
+      });
+    }
+
+    const user2Update = await usersModel.findByIdAndUpdate(
+      { _id: idOfUser2 },
+      { $pull: { Followers: idOfUser } },
+      { new: true }
+    );
+
+    if (!user2Update) {
+      return res.status(404).json({
+        success: false,
+        message: `The user with id => ${idOfUser2} not found`,
+      });
+    }
+
+    return res.status(202).json({
+      success: true,
+      message: `Followers updated`,
+      data: { Following: user1Update, Followers: user2Update },
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({
+      success: false,
+      message: `Server Error`,
+      error: err.message,
+    });
+  }
+};
+
 
 module.exports = {
   register,
   login,
-  getProfile
+  getProfile,
+  addFav,
+  removeFav,
+  getProfileById,
+  addFollowers,
+  removeFollow
 };
