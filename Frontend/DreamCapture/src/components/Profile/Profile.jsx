@@ -10,6 +10,8 @@ function Profile() {
   const { token } = useContext(UserContext);
   const [articles, setArticles] = useState([]);
   const [Refresh, setRefresh] = useState(true)
+  const [ToggleUserModal, setToggleUserModal] = useState(false)
+  const [ToggleUserModal2, setToggleUserModal2] = useState(false)
 const navigate = useNavigate();
 
   const config = {
@@ -92,12 +94,13 @@ axios
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             {user.firstName} {user.lastName}
           </h2>
-          <button
-            onClick={handleShowProfile}
-            className="bg-light-primary text-light-text dark:bg-dark-primary dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary mt-4 px-4 py-2 font-medium rounded-lg shadow-md focus:ring-opacity-75"
-          >
-            Show Profile
-          </button>
+          <div className="flex gap-10 mt-4">
+          <p onClick={()=>{setToggleUserModal2(true)}}
+           className="cursor-pointer text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary">{user.Followers?.length} Followers</p> 
+          <p className="text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary">.</p>
+           <p onClick={()=>{setToggleUserModal(true)}}
+           className="cursor-pointer text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary">{user.Following?.length} Following</p>
+          </div>
         </div>
         <div>
           <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -232,12 +235,15 @@ axios
                           className="font-bold text-xl mb-2 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary">{e.title}</h2>
                           <div className="flex items-center mb-4">
                             <img
-                              className="w-10 h-10 rounded-full mr-4 object-contain"
+                              onClick={()=>navigate(`/profile/${e.author._id}`)}
+                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
                               src={e.author.img}
                               alt="Avatar"
                             />
                             <div className="text-sm">
-                              <p className="text-gray-900 dark:text-gray-100 leading-none">
+                              <p
+                              onClick={()=>navigate(`/profile/${e.author._id}`)} 
+                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
                               {e.author.firstName} {e.author.lastName}
                               </p>
                             </div>
@@ -281,6 +287,150 @@ axios
           </div>
         </div>
       </div>
+      {ToggleUserModal && (
+  <div
+    className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50"
+    onClick={() => setToggleUserModal(false)}
+  >
+    <div
+      className="relative p-4 w-full max-w-2xl max-h-full bg-white rounded-lg shadow dark:bg-gray-700"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Modal Header */}
+      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+          Following List
+        </h3>
+        <button
+          type="button"
+          className="text-gray-400 bg-transparent hover:bg-red-200 hover:text-red-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-red-600 dark:hover:text-white"
+          onClick={() => setToggleUserModal(false)}
+        >
+          <span className="sr-only">Close modal</span>
+          ✕
+        </button>
+      </div>
+
+      {/* Modal Body */}
+      <div className="p-4 md:p-5 space-y-4">
+      {console.log(user)}
+        {user.Following?.length > 0 ? (
+          <ul className="space-y-3">
+            {user.Following.map((user, index) => (
+              <li
+                key={user.id || index}
+                className="items-center px-2  border rounded-lg bg-gray-100 dark:bg-gray-700"
+              >
+                <div className="flex items-center mb-4">
+                            <img
+                              onClick={()=>navigate(`/profile/${user._id}`)}
+                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
+                              src={user.img}
+                              alt="Avatar"
+                            />
+                            <div className="text-sm">
+                              <p
+                              onClick={()=>navigate(`/profile/${user._id}`)} 
+                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
+                              {user.firstName} {user.lastName}
+                              </p>
+                            </div>
+                          </div>
+                
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500 dark:text-gray-400">
+            No users available.
+          </p>
+        )}
+      </div>
+
+      {/* Modal Footer */}
+      <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <button
+          onClick={() => setToggleUserModal(false)}
+          className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+{ToggleUserModal2 && (
+  <div
+    className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50"
+    onClick={() => setToggleUserModal2(false)}
+  >
+    <div
+      className="relative p-4 w-full max-w-2xl max-h-full bg-white rounded-lg shadow dark:bg-gray-700"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Modal Header */}
+      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+          Followers List
+        </h3>
+        <button
+          type="button"
+          className="text-gray-400 bg-transparent hover:bg-red-200 hover:text-red-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-red-600 dark:hover:text-white"
+          onClick={() => setToggleUserModal2(false)}
+        >
+          <span className="sr-only">Close modal</span>
+          ✕
+        </button>
+      </div>
+
+      {/* Modal Body */}
+      <div className="p-4 md:p-5 space-y-4">
+      {console.log(user)}
+        {user.Followers?.length > 0 ? (
+          <ul className="space-y-3">
+            {user.Followers.map((user, index) => (
+              <li
+                key={user.id || index}
+                className="items-center px-2  border rounded-lg bg-gray-100 dark:bg-gray-700"
+              >
+                <div className="flex items-center mb-4">
+                            <img
+                              onClick={()=>navigate(`/profile/${user._id}`)}
+                              className="w-10 h-10 rounded-full cursor-pointer mr-4 object-contain"
+                              src={user.img}
+                              alt="Avatar"
+                            />
+                            <div className="text-sm">
+                              <p
+                              onClick={()=>navigate(`/profile/${user._id}`)} 
+                              className="text-gray-900 cursor-pointer hover:text-light-primary dark:hover:text-dark-primary dark:text-gray-100 leading-none">
+                              {user.firstName} {user.lastName}
+                              </p>
+                            </div>
+                          </div>
+                
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500 dark:text-gray-400">
+            No users available.
+          </p>
+        )}
+      </div>
+
+      {/* Modal Footer */}
+      <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <button
+          onClick={() => setToggleUserModal2(false)}
+          className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }

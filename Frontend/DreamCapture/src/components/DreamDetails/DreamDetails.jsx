@@ -369,7 +369,7 @@ axios
                     {/* Modal Body */}
                     <div className="p-4 md:p-5 space-y-4">
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        {`Please choose the new cover image for "${Dream?.title}" dream?`}
+                        {`Please choose the new cover image for "${Dream?.title}" dream..`}
                       </p>
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                       Note: you can't redo this action.
@@ -395,6 +395,7 @@ axios
                       <button
                         onClick={() => {updateById(Dream._id)
                           alert (`The dream "${Dream.title}" has been updated`)
+                          settoggleImgEdit(false)
                         }
                         }
                         className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
@@ -438,7 +439,7 @@ axios
                     {/* Modal Body */}
                     <div className="p-4 md:p-5 space-y-4">
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        {`Please choose the new cover image for "${Dream?.title}" dream?`}
+                        {`Please choose the new title for "${Dream?.title}" dream`}
                       </p>
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                       Note: you can't redo this action.
@@ -464,6 +465,7 @@ axios
                       <button
                         onClick={() => {updateById(Dream._id)
                           alert (`The dream "${Dream.title}" has been updated`)
+                          settoggletitleEdit(false)
                         }
                         }
                         className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
@@ -507,7 +509,7 @@ axios
                     {/* Modal Body */}
                     <div className="p-4 md:p-5 space-y-4">
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        {`Please choose the new mood for "${Dream?.title}" dream?`}
+                        {`Please choose the new mood for "${Dream?.title}" dream`}
                       </p>
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                       Note: you can't redo this action.
@@ -538,6 +540,7 @@ axios
                       <button
                         onClick={() => {updateById(Dream._id)
                           alert (`The dream "${Dream.title}" has been updated`)
+                          settogglemoodEdit(false)
                         }
                         }
                         className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
@@ -581,10 +584,7 @@ axios
                     {/* Modal Body */}
                     <div className="p-4 md:p-5 space-y-4">
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        {`Please add the new Tags for "${Dream?.title}" dream?`}
-                      </p>
-                      <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                      Note: you can't redo this action.
+                        {`Please add the new Tags for "${Dream?.title}" dream`}
                       </p>
                       <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 mb-2">
@@ -626,8 +626,9 @@ axios
                     <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                       <button
                         onClick={(e) => {addTag(Dream._id, e.target.value)
-                          console.log(Dream._id, );
+                           setRefresh(!Refresh)        
                           alert (`The dream "${Dream.title}" has been updated`)
+                          settoggletagsEdit(false)
                         }
                         }
                         className="bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text hover:text-dark-text dark:hover:text-light-text dark:hover:bg-light-primary hover:bg-dark-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
