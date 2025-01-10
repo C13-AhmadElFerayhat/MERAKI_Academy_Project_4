@@ -11,20 +11,6 @@
 
 ---
 
-## Table of Contents
-
-- [Features](#features)  
-- [Tech Stack](#tech-stack)  
-- [Installation](#installation)  
-  - [Prerequisites](#prerequisites)  
-  - [Steps](#steps)  
-- [Usage](#usage)  
-- [Project Goals](#project-goals)  
-- [Challenges Faced](#challenges-faced)  
-- [Future Improvements](#future-improvements)  
-- [License](#license)  
-- [Contact](#contact)  
-
 <details>
   <summary>Table of Contents</summary>
   <ol>
