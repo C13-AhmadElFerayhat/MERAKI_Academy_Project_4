@@ -2,7 +2,7 @@
 
 <br />
 <div align="center">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="Frontend/DreamCapture/src/assets" alt="Logo" width="80" height="80">
   <h3 align="center">Dream Capture</h3>
   <p align="center">
     "Capture your dream, discover yourself."
